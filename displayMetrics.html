@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+    <title>Metrics</title>
+    <link href="stylesheet.css" rel= "stylesheet">
+    <script type = "module" src = "metricScripts.js" defer></script>
+</head>
+<body>
+    <div class="page">
+        <header>
+            <img src="logo.jpg" />
+        </header>
+        <div class="page-contents">
+            <h1>Metrics</h1>
+            <h2>Please Choose a Client to display Metrics</h2>
+            <select id = "client">
+                <option>Choose Client</option>
+            </select><br>
+            <div class = buttons>
+            <button id = "display">Display Metrics</button>
+            <button onclick="window.location.href='index.html';">Return to Client List</button>
+            </div>
+            <div class="metrics">
+                <p data-name class="metricList">Client: </p>
+                <p data-weight class="metricList">Weight: </p>
+                <p data-height class="metricList">Height: </p>
+                <p data-age class="metricList">Age: </p>
+                <p data-gender class="metricList">Gender: </p>
+                <p data-activity class="metricList">Activity: </p>
+                <p data-BMI class="metricList">Body Mass Index: </p>
+                <p data-BMR class="metricList">Basal Metabolic Rate: </p>
+                <p data-Calories class="metricList">Maintenance Calorie Intake: </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+/* page styles */
+body{
+    max-width: 1500px;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    background: gray;
+    margin: 0 auto;
+    text-align: center;
+}
+
+header img{
+    width: 100%;
+    height: 300px;
+}
+
+.page{
+    background: lightgray;
+    min-height: 100vh;
+}
+
+.page-contents{
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+
+/* table styles */
+table{
+    border: 3px solid black;
+    border-spacing: 25px;
+    width: 100%
+}
+
+table, th, td {
+    vertical-align: middle;
+    background-color: white;
+}
+
+
+/* form styles */
+#clientForm, #removeForm, .editForm {
+    display: none;
+}
+
+select{
+    background: white;
+    border: none;
+    width: 150px;
+    height: 20px;
+    margin: 0 auto;
+}
+
+button, #formSubmit, #reset1 {
+    color: white;
+    background-color: black;
+    padding: 7px 10px;
+    border: none;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button:hover, #formSubmit:hover, #reset1:hover{
+    background-color: white;
+    color:black;
+}
+
+
+/* metric list styles */
+.metricList{
+    font-size: 20px;
+    margin-left: 40px;
+}
+
+ #client{
+   display: block;
+}
+
+.metrics{
+    background-color: white;
+    border-radius: 3rem;
+    padding: 40px;
+    min-width: 1000px;
+    text-align: left;
+}
+
+@media screen and (max-width: 1500px){
+    .metrics{
+        min-width: 70vw;
+    }
+}
