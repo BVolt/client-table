@@ -1,26 +1,27 @@
-import Client from './clientClass.js';
-
-var clientList = JSON.parse(localStorage.getItem('clientList'));
+//Variable declarations
+let clientList = JSON.parse(localStorage.getItem('clientList'));
 const display = document.querySelector('#display');
 const input = document.querySelector('#client');
 const bmi = document.querySelector('[data-BMI]');
 const bmr = document.querySelector('[data-BMR]');
 const calories = document.querySelector('[data-Calories]')
-const name = document.querySelector('[data-name]')
+const nam = document.querySelector('[data-name]')
 const weight = document.querySelector('[data-weight]')
 const height = document.querySelector('[data-height]')
 const age = document.querySelector('[data-age]')
 const gender = document.querySelector('[data-gender]')
 const activity = document.querySelector('[data-activity]')
 
+
+//Display a list of clients to choose from
 for(var i = 0; i < clientList.length; i++){
     input.innerHTML += `<option>${clientList[i].name}</option>`
 }
 
 
-
+//Displays the clients existing info as well as calls functions to calculate metrics
 display.addEventListener('click', button =>{
-    name.innerHTML = `Client: `
+    nam.innerHTML = `Client: `
     weight.innerHTML = `Weight: `
     height.innerHTML = `Height: `
     age.innerHTML = `Age: `
@@ -32,7 +33,7 @@ display.addEventListener('click', button =>{
     
     for (var i = 0; i < clientList.length; i++){
         if(clientList[i].name == input.value){
-            name.innerHTML += clientList[i].name
+            nam.innerHTML += clientList[i].name
             weight.innerHTML += `${clientList[i].weight} lbs`
             height.innerHTML += `${clientList[i].height} in`
             age.innerHTML += clientList[i].age
@@ -46,12 +47,16 @@ display.addEventListener('click', button =>{
     input.value = null;
 })
 
+
+//Calculates body mass index
 function calcBMI(weight, height){
     let bmi = 0;
     bmi = ((weight*703)/height/height);
     return bmi;
 }
 
+
+//calculates basal metabolic rate
 function calcBMR(weight, height, age, gender){
     let bmr = 0;
 
@@ -65,6 +70,8 @@ function calcBMR(weight, height, age, gender){
 
 }
 
+
+//calculates recommended maintenance calories
 function calcCalories(bmr, activity){
     let expenditure = 0;
     if(activity === "Very High"){

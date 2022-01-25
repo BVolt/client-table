@@ -1,62 +1,16 @@
-import Client from './clientClass.js';
+//Import our class and initial array
+import {Client, initialList} from './clientClass.js';
 
+//Check if there is a state in local storage
 if (!localStorage.getItem('clientList')){
-    alert("Welcome to the training client table application. This application will allow you to store data on training clients then calculcate metrics of BMI, BMR, and calories. The data is stored in local storage and the array is initialized with six values.")
-    var list = [{
-        name:"Brenden Johnson", 	
-        weight: 170,
-        height: 70, 	
-        age: 22, 	
-        gender: "Male", 	
-        activity: "Moderate"
-    },
-    {
-        name:"John Smith", 	
-        weight: 140,
-        height: 60, 	
-        age: 34, 	
-        gender: "Other", 	
-        activity: "Very High"
-    },
-    {
-        name:"Amanda Sanchez", 	
-        weight: 120,
-        height: 40, 	
-        age: 56, 	
-        gender: "Female", 	
-        activity: "Light"
-    },
-    {
-        name:"Jason Nasmeth", 	
-        weight: 200,
-        height: 85, 	
-        age: 68, 	
-        gender: "Male", 	
-        activity: "Moderate"
-    },
-    {
-        name:"Josephine Cambell", 	
-        weight: 106,
-        height: 52, 	
-        age: 41, 	
-        gender: "Male", 	
-        activity: "Low"
-    },
-    {
-        name:"Rachell singo", 	
-        weight: 90,
-        height: 60, 	
-        age: 27, 	
-        gender: "Female", 	
-        activity: "Light"
-    }
-];
+    let list = initialList;
     localStorage.setItem('clientList', JSON.stringify(list));
 }
 
-var clientList = JSON.parse(localStorage.getItem('clientList'));
-var edit = false;
-var editIndex = -1;
+//Variables
+let clientList = JSON.parse(localStorage.getItem('clientList'));
+let edit = false;
+let editIndex = -1;
 const openForm = document.querySelector('#openForm');
 const formSubmit = document.querySelector('#formSubmit');
 const remove = document.querySelector('#remove');
@@ -71,7 +25,9 @@ const editEntry = document.querySelector('#edit');
 const editInput = document.querySelector('#editClient');
 const editForm = document.querySelector('.editForm')
 
+//Functions
 
+//This function uses a for loop to display all objects in the array as table elements
 function displayClients(list){
     var table = document.querySelector('#clientTable');
     table.innerHTML = "";
@@ -90,6 +46,7 @@ function displayClients(list){
 }
 
 
+//This function display our form by changing css styles
 openForm.addEventListener('click', button => {
     removeForm.style.display = 'none';
     editForm.style.display = 'none';
@@ -97,10 +54,68 @@ openForm.addEventListener('click', button => {
 })
 
 
-function isInt(n){
-    return (Number(n) === n);
-}
+//This function opens our remove form on click and creates the list of options in select tag
+remove.addEventListener('click', button =>{
+    clientForm.style.display='none';
+    editForm.style.display = 'none';
+    removeForm.style.display = 'block';
+    removeField.innerHTML = `<option>Choose Client</option>`;
 
+    for (var i = 0; i < clientList.length; i++){
+        var listItem = `<option>${clientList[i].name}</option>`;
+        removeField.innerHTML += listItem;
+    }
+})
+
+
+//This function updates the array on click by using the array splice function
+update.addEventListener('click', button =>{
+    for (var i = 0; i < clientList.length; i++){
+        if(clientList[i].name === removeField.value){
+            clientList.splice(i, 1);
+        }
+    }
+    localStorage.setItem('clientList', JSON.stringify(clientList));
+    displayClients(clientList)
+    removeForm.style.display = 'none';
+    removeField.value = null;
+})
+
+
+//This button opens the edit options and creates a list from the names of client objects in the array
+editEntry.addEventListener('click', button =>{
+    clientForm.style.display='none';
+    removeForm.style.display = 'none';
+    editForm.style.display = 'block';
+    editInput.innerHTML = `<option>Choose Client</option>`;
+    for (var i = 0; i < clientList.length; i++){
+        var listItem = `<option>${clientList[i].name}</option>`;
+        editInput.innerHTML += listItem;
+    }
+})
+
+
+//This function sets up the add form to edit an existing entry
+editButton.addEventListener('click', button => {
+    for (var i = 0; i < clientList.length; i++){
+        if(clientList[i].name === editInput.value){
+            document.querySelector('#name').value = clientList[i].name;
+            document.querySelector('#wght').value = clientList[i].weight;
+            document.querySelector('#hght').value = clientList[i].height;
+            document.querySelector('#age').value = clientList[i].age;
+            document.querySelector('#gend').value = clientList[i].gender;
+            document.querySelector('#act').value = clientList[i].activity;
+            editIndex = i;
+            edit = true;
+        }
+    }
+    editForm.style.display = 'none';
+    clientForm.style.display = 'block'
+    editInput.value = null;
+})
+
+
+//This function submits our form on click and commits the input to local storage so long as all validatio parameters are met.
 formSubmit.addEventListener('click', button => {
     const inpName = document.querySelector('#name').value;
     const inpWeight = document.querySelector('#wght').value;
@@ -171,72 +186,27 @@ formSubmit.addEventListener('click', button => {
 
 })
 
-remove.addEventListener('click', button =>{
-    clientForm.style.display='none';
-    editForm.style.display = 'none';
-    removeForm.style.display = 'block';
-    removeField.innerHTML = `<option>Choose Client</option>`;
 
-    for (var i = 0; i < clientList.length; i++){
-        var listItem = `<option>${clientList[i].name}</option>`;
-        removeField.innerHTML += listItem;
-    }
-})
-
-update.addEventListener('click', button =>{
-    for (var i = 0; i < clientList.length; i++){
-        if(clientList[i].name === removeField.value){
-            clientList.splice(i, 1);
-        }
-    }
-    localStorage.setItem('clientList', JSON.stringify(clientList));
-    displayClients(clientList)
-    removeForm.style.display = 'none';
-    removeField.value = null;
-})
-
+//This function handles our cancel add button click
 cancelAdd.addEventListener('click', button => {
     clientForm.style.display = 'none';
     clientForm.reset();
     edit = false;
 })
 
+
+//This function handles the cancel remove button click
 cancelRemove.addEventListener('click', button => {
     removeForm.style.display = 'none';
     removeField.value = null;
 })
 
-editButton.addEventListener('click', button => {
-    for (var i = 0; i < clientList.length; i++){
-        if(clientList[i].name === editInput.value){
-            document.querySelector('#name').value = clientList[i].name;
-            document.querySelector('#wght').value = clientList[i].weight;
-            document.querySelector('#hght').value = clientList[i].height;
-            document.querySelector('#age').value = clientList[i].age;
-            document.querySelector('#gend').value = clientList[i].gender;
-            document.querySelector('#act').value = clientList[i].activity;
-            editIndex = i;
-            edit = true;
-        }
-    }
-    editForm.style.display = 'none';
-    clientForm.style.display = 'block'
-    editInput.value = null;
-})
 
-editEntry.addEventListener('click', button =>{
-    clientForm.style.display='none';
-    removeForm.style.display = 'none';
-    editForm.style.display = 'block';
-    editInput.innerHTML = `<option>Choose Client</option>`;
-    for (var i = 0; i < clientList.length; i++){
-        var listItem = `<option>${clientList[i].name}</option>`;
-        editInput.innerHTML += listItem;
-    }
-})
-
+//This is our cancel button for edit form
 cancelEdit.addEventListener('click', button =>{
     document.querySelector('.editForm').style.display = 'none';
 })
 
+
+//Call display function
 displayClients(clientList);
