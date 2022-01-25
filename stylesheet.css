@@ -36,7 +36,7 @@ table, th, td {
     background-color: white;
 }
 
-p{
+#read-me{
     background-color: black;
     color: white;
     border-radius: 1rem;
@@ -48,6 +48,7 @@ p{
 a{
     text-decoration: none;
     color:  blue;
+    padding-bottom: 15px;
 }
 
 a:hover{
